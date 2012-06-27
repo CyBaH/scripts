@@ -9,7 +9,7 @@
 
 import irclib
 import sys
-
+#test = bla
 
 irclib.DEBUG=1
 
