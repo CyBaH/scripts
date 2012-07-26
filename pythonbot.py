@@ -62,6 +62,7 @@ class IRCCat(irclib.SimpleIRCClient):
     
         c.privmsg(e.target(),"\x02\x0304" + user + "\x03\x0312 gives \x02\x0304" + args[0] + "\x02\x0312 a nice cold \x02\x0304Beer!")
         
+        
 def main():
     if len(sys.argv) != 4:
         print "Usage: irccat2 <server[:port]> <nickname> <target>"
