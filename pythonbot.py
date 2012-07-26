@@ -29,13 +29,13 @@ class IRCCat(irclib.SimpleIRCClient):
 
     def on_disconnect(self, connection, event):
         sys.exit(0)
-        
+
     def on_pubmsg(self, c, e):
-	
+
         #handle a bot command and call cmd_<commandname>
         if (e.arguments()[0][0]=='!'):
-		#print event.arguments()
-		words=e.arguments()[0].split(' ')
+               #print event.arguments()
+                words=e.arguments()[0].split(' ')
                 m = "cmd_" + words[0][1:]
                 if hasattr(self, m):
                         getattr(self, m)(c=c, e=e, user=e.source().split ( '!' )[0], args=words[1:])
@@ -49,21 +49,36 @@ class IRCCat(irclib.SimpleIRCClient):
         c.privmsg(e.target(), "KLOPT OOK!")
 
     def cmd_hello (self, c, e, user, args):
-        # let the bot get the username out of host assigned to user var!
-        user = e.source().split ( '!' ) [ 0 ]
 
         c.privmsg(e.target(), "hello" + user + " im a python bot coded by CyBaH. Contact him if u need info regarding me!")
 
     def cmd_bmo (self, c, e, user, args):
-    
-        c.privmsg(e.target(),"\x02\x0304" + user + "\x02\x0312 wants to be busted out channel \x02\x0304" + args[0] + "\x02\x0312 with text: \x02\x0304" + " ".join(args[1:]) )
-        
+
+        c.privmsg(e.target(),"\x02\x0304" + user + "\x02\x0312 wants to be busted out in \x02\x0304" + " ".join(args[0:]) )
+
     def cmd_beer (self, c, e, user, args):
-    
-        c.privmsg(e.target(),"\x02\x0304" + user + "\x03\x0312 gives \x02\x0304" + args[0] + "\x02\x0312 a nice cold \x02\x0304Beer!")
-        
-        
-def main():
+
+        c.privmsg(e.target(),"\x02\x0304" + user + "\x02\x0312 gives \x02\x0304" + args[0] + "\x02\x0312 a nice cold \x02\x0304Beer!")
+
+    def cmd_thanks (self, c, e, user, args):
+
+        c.privmsg(e.target(),"\x02\x0312 thanks for the \x02\x0304bust-out \x02\x0312" + " ".join(args[0:]) + "\x02\x0312 from \x02\x0304" + user )
+
+    def cmd_tx (self, c, e, user, args):
+
+        c.privmsg(e.target(),"\x02\x0312 thanks for the \x02\x0304bust-out \x02\x0312" + " ".join(args[0:]) )
+
+
+    def cmd_thx (self, c, e, user, args):
+
+        c.privmsg(e.target(),"\x02\x0312 thanks for the \x02\x0304bust-out \x02\x0312" + " ".join(args[0:]) )
+
+    def cmd_ty (self, c, e, user, args):
+
+        c.privmsg(e.target(),"\x02\x0312 thanks for the \x02\x0304bust-out \x02\x0312" + " ".join(args[0:]) )
+
+
+def main() :
     if len(sys.argv) != 4:
         print "Usage: irccat2 <server[:port]> <nickname> <target>"
         print "\ntarget is a nickname or a channel."
