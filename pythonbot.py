@@ -9,9 +9,9 @@
 
 import irclib
 import sys
-#test = bla
 
 irclib.DEBUG=1
+
 
 class IRCCat(irclib.SimpleIRCClient):
     def __init__(self, target):
@@ -30,25 +30,35 @@ class IRCCat(irclib.SimpleIRCClient):
     def on_disconnect(self, connection, event):
         sys.exit(0)
         
-    def on_pubmsg(self, connection, event):
-
+    def on_pubmsg(self, c, e):
+	
         #handle a bot command and call cmd_<commandname>
-        if (event.arguments()[0][0]=='!'):
-                m = "cmd_" + event.arguments()[0][1:]
+        if (e.arguments()[0][0]=='!'):
+		#print event.arguments()
+		words=e.arguments()[0].split(' ')
+                m = "cmd_" + words[0][1:]
                 if hasattr(self, m):
-                        getattr(self, m)(connection, event)
+                        getattr(self, m)(c=c, e=e, user=e.source().split ( '!' )[0], args=words[1:])
                 else:
                         print "No handler for command: ",m
 
-
-    def cmd_redisgek(self, c, e):
+    def cmd_redisgek(self, c, e, user, args):
         c.privmsg(e.target(), "KLOPT!")
 
-
-    def cmd_psyisuber(self, c, e):
+    def cmd_psyisuber(self, c, e, user, args):
         c.privmsg(e.target(), "KLOPT OOK!")
 
+    def cmd_hello (self, c, e, user, args):
+        # let the bot get the username out of host assigned to user var!
+        user = e.source().split ( '!' ) [ 0 ]
+
+        c.privmsg(e.target(), "hello" + user + " im a python bot coded by CyBaH. Contact him if u need info regarding me!")
+
+    def cmd_kickexample (self, c, e, user, args):
+    
+        c.privmsg(e.target(), user + "wants to be busted out channel " + args[0] + " with text: " + " ".join(args[1:]) )
         
+
 def main():
     if len(sys.argv) != 4:
         print "Usage: irccat2 <server[:port]> <nickname> <target>"
