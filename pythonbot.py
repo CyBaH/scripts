@@ -21,6 +21,11 @@ class IRCCat(irclib.SimpleIRCClient):
     def on_welcome(self, connection, event):
         if irclib.is_channel(self.target):
             connection.join(self.target)
+            self.channel = '#tempestuoso'
+            connection.join(self.channel)
+            self.channel = '#temptalks'
+            connection.join(self.channel)
+
         else:
             self.send_it()
 
