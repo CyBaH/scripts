@@ -82,7 +82,12 @@ class IRCCat(irclib.SimpleIRCClient):
 
         c.privmsg(e.target(),"\x02\x0312 thanks for the \x02\x0304bust-out \x02\x0312" + " ".join(args[0:]) )
 
-
+    def cmd_test (self, c, e, user, args):
+	
+	test = open("dbases/test.db" , "r")
+	testlines = test.readlines()
+	c.privmsg(e.target(),testlines)
+	test.close()
 def main() :
     if len(sys.argv) != 4:
         print "Usage: irccat2 <server[:port]> <nickname> <target>"
@@ -99,6 +104,18 @@ def main() :
             sys.exit(1)
     else:
         port = 6667
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
     nickname = sys.argv[2]
     target = sys.argv[3]
 
